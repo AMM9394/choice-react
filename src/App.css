@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  text-align: left;
+  padding-left: 10%;
 }
 
 .App-logo {
@@ -26,6 +27,18 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.left{
+  heignt:100%;
+  display: inline-block;
+}
+.left .red {
+  color: red;
+  font-size: 16px;
+}
+.right{
+  width: 85%;
+  display: inline-block;
+}
 .default {
   display: inline-block;
   border: 1px dashed;
@@ -33,6 +46,8 @@
   margin: 5px;
   cursor: pointer;
   position: relative;
+  border-radius: 5px;
+  background: #ffffff;
 }
 .selected{
   border: 1px solid;
@@ -54,4 +69,14 @@
   font-size: 12px;
   bottom: 0;
   z-index: 99;
+}
+.open{
+  background: #d3d3d3;
+}
+.types{
+  background: #e4e4e4;
+  border: 1px solid;
+  border-radius: 5px;
+  width: 100%;
+  margin: 10px;
 }

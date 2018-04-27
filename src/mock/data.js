@@ -1,9 +1,11 @@
 export const rootTypes = [
   {
     name:'SHARP',
+    type:'root',
     id:1,
   },{
     name:'InFocus',
+    type:'root',
     id:2,
   },
 ];
@@ -11,18 +13,45 @@ export const sub1Types = [
   {
     name:'938',
     id:11,
-    parentId:1,
+    type:'sub1',
+    parentId:2,
   },{
     name:'938',
+    type:'sub1',
     id:12,
-    parentId:1,
+    parentId:2,
   },{
     name:'938',
+    type:'sub1',
     id:13,
     parentId:2,
   },{
     name:'938',
+    type:'sub1',
     id:14,
     parentId:2,
   },
 ];
+export const treeData = [
+  {
+    name:'SHARP',
+    id:1,
+    status:['default'],
+    collapse:false,
+    children:[
+      {
+        name:'938',
+        collapse:false,
+        id:14,
+        parentId:1,
+        status:['default'],
+      },
+    ],
+  },{
+    name:'InFocus',
+    id:1,
+    status:['default'],
+    collapse:false,
+    children:[],
+  },
+] ;
