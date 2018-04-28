@@ -1,6 +1,7 @@
 .App {
   text-align: left;
   padding-left: 10%;
+  display: table;
 }
 
 .App-logo {
@@ -28,8 +29,8 @@
   to { transform: rotate(360deg); }
 }
 .left{
-  heignt:100%;
-  display: inline-block;
+  height:100%;
+  display: table-cell;
 }
 .left .red {
   color: red;
@@ -37,7 +38,7 @@
 }
 .right{
   width: 85%;
-  display: inline-block;
+  display: table-cell;
 }
 .default {
   display: inline-block;
