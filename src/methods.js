@@ -1,4 +1,4 @@
-export const arrayReset = (array,item)=>{
+export const arrayDeleteItem = (array,item)=>{
   let newArray = [];
   for(let i in array){
     if(!equal(array[i],item)){
