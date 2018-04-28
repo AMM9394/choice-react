@@ -73,6 +73,9 @@
 .open{
   background: #d3d3d3;
 }
+.sub:after ,.sub:before{
+  display: none;
+}
 .types{
   background: #e4e4e4;
   border: 1px solid;

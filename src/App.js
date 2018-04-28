@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import {rootTypes, sub1Types,treeData} from './mock/data';
+import {rootTypes, sub1Types,sub2Types} from './mock/data';
 import {arrayHas,arrayDeleteItem} from './methods';
 class App extends Component {
   constructor(props){
@@ -9,50 +9,47 @@ class App extends Component {
     this.state = {
       className:'',
       current:{type:'',id:-1},
-      selectedIds:[],
-      openIds:[],
+      selectedIds:{root:[], sub1:[], sub2:[]},
+      openIds:{root:-1, sub1:-1, sub2:-1},
+      hasChoosedSubIds:{root:-1, sub1:-1},
       sub1tps:[],
-      rootTypes:rootTypes,
+      sub2tps:[],
+      // mychoose:[],
     }
   }
 
-  onBoxClick(type,datas){
+  onBoxClick(item,selectedIds,openIds,hasChoosedSubIds){
     let sub1tps=[];
-    /*for(let open of openIds){
-      if (open.type==='root'){
-        for (let sub1 of sub1Types){
-          if(sub1.parentId === open.id) {sub1tps.push(sub1);}
-        }
-      }
-    }*/
-    this.setState({[type]:datas});
-  }
-/*
-  renderTree(data){
-    data.map((item,key)=><Box key={key} item={item}/>);
-    if(data.collapse && data.children){
-      this.renderTree(data.children)
+    let sub2tps=[];
+    if(openIds.root){
+      sub1tps = this.getSub(openIds.root,sub1Types);
     }
-    if(data.collapse && data.children){
-      return (data.length?<div>
-        data.map((item,key)=><Box key={key} item={item}/>)
-      </div>:null)
+    if (openIds.sub1){
+      sub2tps = this.getSub(openIds.sub1,sub2Types);
     }
+    if(sub1tps.length===0){openIds.root=-1;}
+    if(sub2tps.length===0){openIds.sub1=-1;}
+    this.setState({selectedIds,openIds,hasChoosedSubIds,sub1tps,sub2tps});
   }
-  `${arrayHas(selectedIds,item.id)?'selected ':''}${arrayHas(openIds,item)?'open ':''}`
-*/
-  renderClassName (status){
-    let className = '';
-    if(status.length>0) {
-      for (let item of status) {
-        className += item + ' ';
+  getSub(id,data){
+    let sub1tps = [];
+    for(let item of data){
+      if (item.parentId === id) {
+        sub1tps.push(item);
       }
     }
+    return sub1tps;
+  }
+  renderClassName(item,type){
+    let className='';
+    let {selectedIds,openIds,hasChoosedSubIds} = this.state;
+    className += arrayHas(selectedIds[type],item.id)?'selected ':'';
+    className += item.id===openIds[type]?'open ':'';
+    className += item.id===hasChoosedSubIds[type]?'sub ':'';
     return className;
   }
-
   render() {
-    const {selectedIds,openIds,sub1tps,rootTypes} = this.state;
+    const {selectedIds,openIds,hasChoosedSubIds,sub1tps,sub2tps} = this.state;
     return (
       <div className="App">
         <div className="left">
@@ -60,16 +57,25 @@ class App extends Component {
         </div>
         <div className="right">
           <div className="root types">
-            {rootTypes.map((item,key)=><Box selectedIds={selectedIds} openIds = {openIds} datas={rootTypes}
-                                            className={this.renderClassName(item.status)}
-                                            onClick={this.onBoxClick.bind(this,'rootTypes')} item={item} key={key}>{item.name}</Box>)}
+            {rootTypes.map((root,key)=><Box  selectedIds={selectedIds} openIds = {openIds} hasChoosedSubIds={hasChoosedSubIds}
+                                             className={this.renderClassName(root,'root')}
+                                             onClick={this.onBoxClick.bind(this,root)} item={root} key={key}>{root.name}</Box>)}
           </div>
           {sub1tps.length? <div className="sub1 types">
-              {sub1tps.map((sub1,key)=><Box selectedIds={selectedIds} openIds = {openIds}
-                                             className={this.renderClassName(sub1.status)}
-                                            onClick={this.onBoxClick.bind(this,sub1)} item={sub1} key={key}>{sub1.name}</Box>)}
+            {sub1tps.map((sub1,key)=><Box  selectedIds={selectedIds} openIds = {openIds} hasChoosedSubIds={hasChoosedSubIds}
+                                           className={this.renderClassName(sub1,'sub1')}
+                                           onClick={this.onBoxClick.bind(this,sub1)} item={sub1} key={key}>{sub1.name}</Box>)}
 
           </div>:null}
+          {sub2tps.length? <div className="sub1 types">
+            {sub2tps.map((sub2,key)=><Box  selectedIds={selectedIds} openIds = {openIds} hasChoosedSubIds={hasChoosedSubIds}
+                                           className={this.renderClassName(sub2,'sub2')}
+                                           onClick={this.onBoxClick.bind(this,sub2)} item={sub2} key={key}>{sub2.name}</Box>)}
+
+          </div>:null}
+          <div>
+            已选择:
+          </div>
         </div>
       </div>
     );
@@ -81,81 +87,36 @@ export default App;
 class Box extends React.Component {
   constructor(props){
     super(props);
-    this.state={
-      lastItem:{id:-1,type:''},
-      // selectedIds:[],
-      // openIds:[],
-    }
   }
   onClick (){
-    let {item,datas} = this.props;
-    let {lastItem} = this.state;
+    let {item,selectedIds,openIds,hasChoosedSubIds} = this.props;
     let id = item.id;
-    let status= item.status;
-    let ss = ['selected','open','sub'];//状态分别是['选中','选中并展开','展开且有子元素选中']
-    if(lastItem.type===item.type && lastItem.id !== id){
-      //同一级别只能展开一个选项
-      for(let dddd of datas){
-        if(dddd.id === lastItem.id){
-          //删掉上一个节点展开相关状态
-          dddd.status = arrayDeleteItem(dddd,ss[1]);
-          dddd.status = arrayDeleteItem(dddd,ss[2]);
-        }
-      }
+    let type= item.type;
+    if(openIds[type]===id){
+      //展开过再点击取消展开
+      openIds[type]=-1;
     }
-    if(status.length===1){
-      status.push(ss[0],ss[1]);
+    if(arrayHas(selectedIds[type],id)){
+      //选中过再点击就取消选中
+      selectedIds[type]= arrayDeleteItem(selectedIds[type],item.id);
+      openIds[type]=-1;//并且不展开
     }else{
-      for (let sitem of ss){
-        if (arrayHas(status,sitem)){
-          status = arrayDeleteItem(status,sitem);
-        }else {status.push(sitem)}
-      }
-      for(let dddd of datas){
-        if(dddd.id === id){
-          dddd.status = status;
-        }
-      }
+      selectedIds[type].push(id);
+      openIds[type]=type==='sub2'?-1:id;//叶子节点默认不展开
     }
-
-    this.setState({lastItem:item});
-    this.props.onClick(datas);
-/*    if (arrayHas(status,'selected')){
-      arrayReset(status,'')
+    switch(type){
+      case 'sub1': hasChoosedSubIds.root=item.parentId;break;
+      case 'sub2': hasChoosedSubIds.sub1=item.parentId;break;
+      default:break;
     }
-    if(arrayHas(selectedIds,id)&&arrayHas(openIds,item)){
-      //选中且展开状态下再次点击时取消选中且展开
-      selectedIds= arrayReset(selectedIds,item.id);
-      openIds= arrayReset(openIds,item);
-    }else{
-      if(arrayHas(selectedIds,id)){
-        //只有选中的状态时再次点击取消选中
-        selectedIds= arrayReset(selectedIds,item.id);
-        for(let openItem of openIds){
-          if(openItem.type === item.type){
-            openIds= arrayReset(openIds,openItem);
-          }
-        }
-      }else{
-        if(arrayHas(openIds,item)){
-          openIds= arrayReset(openIds,item);
-        }else{
-          for(let openItem of openIds){
-            if(openItem.type === item.type){
-              openIds= arrayReset(openIds,openItem);
-            }
-          }
-          openIds.push(item);
-        }
-        selectedIds.push(item.id);
-      }
-    }*/
-
+    this.props.onClick(selectedIds,openIds,hasChoosedSubIds);
   }
   render(){
     let {className,children} = this.props;
     return(
-      <div className={`${className?className:''}`} onClick={this.onClick.bind(this)}>{children}</div>
+      <div className={`default ${className?className:''}`} onClick={this.onClick.bind(this)}>
+        {children}
+      </div>
     )
   }
 }

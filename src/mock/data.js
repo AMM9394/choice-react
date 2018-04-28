@@ -2,10 +2,12 @@ export const rootTypes = [
   {
     name:'SHARP',
     type:'root',
+    status:['default'],
     id:1,
   },{
     name:'InFocus',
     type:'root',
+    status:['default'],
     id:2,
   },
 ];
@@ -14,24 +16,122 @@ export const sub1Types = [
     name:'938',
     id:11,
     type:'sub1',
-    parentId:2,
+    status:['default'],
+    parentId:1,
   },{
-    name:'938',
+    name:'V600',
     type:'sub1',
     id:12,
-    parentId:2,
+    status:['default'],
+    parentId:1,
   },{
     name:'938',
+    id:21,
     type:'sub1',
-    id:13,
+    status:['default'],
     parentId:2,
   },{
-    name:'938',
+    name:'918',
     type:'sub1',
-    id:14,
+    id:22,
+    status:['default'],
+    parentId:2,
+  },{
+    name:'918',
+    type:'sub1',
+    status:['default'],
+    id:23,
+    parentId:2,
+  },{
+    name:'828',
+    type:'sub1',
+    status:['default'],
+    id:24,
+    parentId:2,
+  },{
+    name:'638',
+    type:'sub1',
+    status:['default'],
+    id:25,
+    parentId:2,
+  },{
+    name:'V500',
+    type:'sub1',
+    status:['default'],
+    id:26,
+    parentId:2,
+  },{
+    name:'V600',
+    type:'sub1',
+    status:['default'],
+    id:27,
+    parentId:2,
+  },{
+    name:'928',
+    type:'sub1',
+    status:['default'],
+    id:28,
     parentId:2,
   },
 ];
+export const sub2Types = [
+  {
+    name:'LCD-60SU470A-01',
+    id:221,
+    type:'sub2',
+    status:['default'],
+    parentId:22,
+  },{
+    name:'LCD-60SU470A-01',
+    id:222,
+    type:'sub2',
+    status:['default'],
+    parentId:22,
+  },{
+    name:'LCD-60SU470A-01',
+    id:223,
+    type:'sub2',
+    status:['default'],
+    parentId:22,
+  },{
+    name:'LCD-60SU470A-01',
+    id:224,
+    type:'sub2',
+    status:['default'],
+    parentId:22,
+  },{
+    name:'LCD-60SU470A-01',
+    type:'sub2',
+    id:251,
+    status:['default'],
+    parentId:25,
+  },{
+    name:'LCD-70DS8008A-01',
+    type:'sub2',
+    status:['default'],
+    id:252,
+    parentId:25,
+  },{
+    name:'LCD-70DS8008A-01',
+    type:'sub2',
+    status:['default'],
+    id:253,
+    parentId:25,
+  },{
+    name:'LCD-70DS8008A-01',
+    type:'sub2',
+    status:['default'],
+    id:254,
+    parentId:25,
+  },{
+    name:'LCD-70DS8008A-01',
+    type:'sub2',
+    status:['default'],
+    id:255,
+    parentId:25,
+  },
+];
+/*
 export const treeData = [
   {
     name:'SHARP',
@@ -54,4 +154,4 @@ export const treeData = [
     collapse:false,
     children:[],
   },
-] ;
+] ;*/
