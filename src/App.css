@@ -1,7 +1,6 @@
 .App {
   text-align: left;
-  padding-left: 10%;
-  display: table;
+  /*display: table;*/
 }
 
 .App-logo {
@@ -29,8 +28,11 @@
   to { transform: rotate(360deg); }
 }
 .left{
-  height:100%;
-  display: table-cell;
+  height:50px;
+  float: left;
+  text-align: right;
+  padding-top: 20px;
+  width: 10%;
 }
 .left .red {
   color: red;
@@ -38,7 +40,12 @@
 }
 .right{
   width: 85%;
-  display: table-cell;
+  float: left;
+  padding-left: 25px;
+  /*display: table-cell;*/
+}
+.block{
+  /*display: inline-block;*/
 }
 .default {
   display: inline-block;
@@ -83,4 +90,15 @@
   border-radius: 5px;
   width: 100%;
   margin: 10px;
+  position: relative;
+}
+.types:before{
+
+}
+.option{
+  position: absolute;
+  left: -21px;
+  top: 10px;
+  height: 20px;
+  cursor: pointer;
 }
